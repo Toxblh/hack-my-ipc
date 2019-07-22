@@ -1,4 +1,5 @@
 # Hack my IP camera - My long story (not finished yet)
+
 I bought my first secure camera, and think it will be great! Nobody can't to connect and grab video direct without copy additional soft. Nobody can't read a flashcard if steal the camera. I can connect only via an application and need to use a password for decrypt the video stream... It's cool until then you create a smart home and would like to connect the camera only in a local network without access to the internet for the camera. And have access inside the home using an encrypted VPN network.
 
 I bought a camera on amazon. And I would like to send encrypted video stream to my home server (rPI) for analyse video and send a useful notification for some action. Also, my general idea it is video recognition where is my cat and follow it. It's needed when I'm not at home to see all good or not.
@@ -8,7 +9,8 @@ PS I asked the seller about how to get RSTP or ONVIF stream and nothing only via
 But I bought really not a bad secure camera. And I start my hack with Nmap
 
 Nmap show to me open ports
-```
+
+```shell
 telnet 23
 unknow 34567
 unknow 23456
@@ -16,13 +18,14 @@ unknow 23456
 
 Okay next step it was to find a password, few hours to try password from the internet (yes it's a bit slow, but I had time)
 
-```
+```shell
 login: root
 password: noty
 ```
 
 And I in!
-```
+
+```shell
 login: can't chdir to home directory '/root'
 Welcome to
 
@@ -40,20 +43,23 @@ http://www.faraday.com/
 
 BusyBox v1.19.4 (2017-06-05 13:11:43 CST) built-in shell (ash)
 Enter 'help' for a list of built-in commands.
+[root@GM]#
 ```
 
 Cool! I think - "It super still needs to reconfigure the main process for open RTSP stream or another and it will be done! But If I found how to send photos from the camera already will be awesome!"
 
-*And it was a start of my epopee...*
+_And it was a start of my epopee..._
 
 And fast check what I have
-```
+
+```shell
 [root@GM]# uname -a
 Linux 3.3.0 #19 PREEMPT Tue Sep 19 09:20:55 CST 2017 armv5tel GNU/Linux
 ```
+
 Nice it's Linux for ARM v5tel
 
-```
+```shell
 [root@GM]# ps
   PID USER       VSZ STAT COMMAND
     1 root       808 S    {squashfs_init} /gm/bin/busybox ash /squashfs_init
@@ -135,14 +141,17 @@ Nice it's Linux for ARM v5tel
  1814 root         0 SW   [kworker/0:2]
  1815 root       808 R    ps
 ```
+
 So already not bad
-  - telnetd - for telnet
-  - /gm/bin/wifi_rt8188/wpa_supplicant -Dwext -ira0 -c / - it is for work with Wifi
-  - another '[ * ]' - it's modules for linux or "drivers"
-  - and /usr/sbin/Alloca - looks like main process for camera
+
+- telnetd - for telnet
+- /gm/bin/wifi_rt8188/wpa_supplicant -Dwext -ira0 -c / - it is for work with Wifi
+- another '[ * ]' - it's modules for linux or "drivers"
+- and /usr/sbin/Alloca - looks like main process for camera
 
 Let's see what is really reserver ports
-```
+
+```shell
 [root@GM]# netstat -tupln
 Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
