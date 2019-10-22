@@ -18,5 +18,5 @@
 - http://flagship.eleckits.com/archives/446
 
 # Articles
-https://herrfeder.github.io/embeddedsec/2017/10/19/Hacking-A-IP-Camera-Part1.html#335-collecting-information
-https://www.contextis.com/en/blog/push-hack-reverse-engineering-ip-camera
+- https://herrfeder.github.io/embeddedsec/2017/10/19/Hacking-A-IP-Camera-Part1.html#335-collecting-information
+- https://www.contextis.com/en/blog/push-hack-reverse-engineering-ip-camera
