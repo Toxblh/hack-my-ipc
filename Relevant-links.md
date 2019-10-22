@@ -7,6 +7,7 @@
 - https://github.com/ghoost82/mijia-720p-hack
 - https://github.com/Filipowicz251/mijia-1080P-hacks
 - https://github.com/lymon66/GM8135S-IPC-modified-firmware
+- https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks
 
 # RTSP for GM
 
