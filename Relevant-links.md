@@ -20,3 +20,5 @@
 # Articles
 - https://herrfeder.github.io/embeddedsec/2017/10/19/Hacking-A-IP-Camera-Part1.html#335-collecting-information
 - https://www.contextis.com/en/blog/push-hack-reverse-engineering-ip-camera
+
+"Essentially all of the application code lives in an encrypted (blowfish-448) ELF which uses a common unix command as its filename (possibly to make googling harder). The encrypted ELF has formatted the SD card to the WFS0.4 encrypted filesystem so it can no longer be mounted and used to store my own application data between reboots. Also, whenever I try to kill the encrypted ELF process, the camera promptly reboots after a short delay."  http://www.openipcam.com/forum/index.php?topic=1538.0
