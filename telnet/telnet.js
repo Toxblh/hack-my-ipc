@@ -9,7 +9,7 @@ async function run() {
   let connection = new Telnet()
 
   const params = {
-    host: '192.168.1.9',
+    host: '192.168.123.9',
     port: 23,
     loginPrompt: '? login:',
     passwordPrompt: 'Password:',
@@ -32,14 +32,16 @@ async function run() {
   await cmd('cd /tmp')
   await cmd('mkdir /tmp/www')
   await cmd('mkdir /tmp/www/cgi-bin')
-  await cmd('ftpget 192.168.1.14 /tmp/busybox busybox')
-  await cmd('ftpget 192.168.1.14 /tmp/rtspd rtspd')
-  await cmd('ftpget 192.168.1.14 /tmp/ftpd.sh ftpd.sh')
-  await cmd('ftpget 192.168.1.14 /tmp/www/index.html index.html')
-  await cmd('ftpget 192.168.1.14 /tmp/www/cgi-bin/webui webui')
+  await cmd('ftpget 192.168.123.14 /tmp/busybox busybox')
+  await cmd('ftpget 192.168.123.14 /tmp/rtspd rtspd')
+  await cmd('ftpget 192.168.123.14 /tmp/ftpd.sh ftpd.sh')
+  await cmd('ftpget 192.168.123.14 /tmp/rtsp.sh rtsp.sh')
+  // await cmd('ftpget 192.168.123.14 /tmp/www/index.html index.html')
+  // await cmd('ftpget 192.168.123.14 /tmp/www/cgi-bin/webui webui')
   await cmd('chmod +x /tmp/busybox')
   await cmd('chmod +x /tmp/rtspd')
   await cmd('chmod +x /tmp/ftpd.sh')
+  await cmd('chmod +x /tmp/rtsp.sh')
   await cmd('chmod 700 /tmp/www/cgi-bin/webui')
   await cmd('/tmp/ftpd.sh &')
   // await cmd('/tmp/busybox httpd -h /tmp/www')
