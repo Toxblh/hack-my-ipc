@@ -1,0 +1,11 @@
+auto lo
+
+iface lo inet loopback
+
+iface eth0 inet static
+	address	172.19.78.3
+	broadcast 172.31.255.255
+	netmask 255.240.0.0
+	gateway 172.19.78.2
+	pre-up	/sbin/insmod /lib/modules/2.6.14/extra/ftmac100.ko
+	post-down /sbin/rmmod ftmac100.ko

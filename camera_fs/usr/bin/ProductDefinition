@@ -1,0 +1,19 @@
+{
+   "Vendor" : "General",
+   "Hardware" : "S5-T",
+   "ExHardware" :"(P)",
+   "DeviceCode" :"GM8136",
+   "Sensor"	:"OV9712",
+   "SensorResolution" : "720P",
+   "PackSize" : 8192,
+   "ARSP" : {
+      "DomainName" : "b.ipc365.com",
+      "Port" : "19000"   	
+   }
+   "Language" : [
+		"English",
+   		"SimpChinese",
+		"Japanese",
+		"Portugal"
+   ]
+}

@@ -1,0 +1,66 @@
+local loadfiles = {}
+local curName = {}
+
+function init(path)
+{
+	::dofile(path + "/CommBase", true);
+	print("path = "+path+"\n"); 
+}
+
+function loadCommFile(path, name):(loadfiles)
+{
+	loadfiles.rawset(name, ::dofile(path, true));
+	print("path = "+path+", name = "+name+"\n"); 
+}
+
+function SetProtocol(name):(loadfiles, curName)
+{ 
+	curName.rawset("Selected", name);
+	print("index: "+curName["Selected"]+"\n");
+	return true;
+}
+
+function setAddr(addr):(loadfiles, curName)
+{ 
+	return loadfiles[curName["Selected"]].setAddr(addr);
+}
+
+function getCmdLen():(loadfiles, curName)
+{ 
+	return loadfiles[curName["Selected"]].getCmdLen();
+} 
+
+function CheckSum():(loadfiles, curName)
+{
+	loadfiles[curName["Selected"]].CheckSum();
+}
+
+function ParseData(cmdBuf):(loadfiles, curName)
+{
+	print("MainComm ParseData\n");
+	return loadfiles[curName["Selected"]].ParseData(cmdBuf);
+}
+
+function InitCmd(name, addr):(loadfiles, curName)
+{ 
+	curName.rawset("Selected", name);
+	print("name: "+curName["Selected"]+"\n");
+	loadfiles[name].setAddr(addr);
+}
+
+function loadProtocolAttr(name):(loadfiles)
+{
+	local Attr = {};
+	Attr.rawset("Name", loadfiles[name].Name);
+	Attr.rawset("Type", loadfiles[name].Type);
+	Attr.rawset("CommandLen", loadfiles[name].CommandLen);
+	Attr.rawset("HeadLen", loadfiles[name].HeadLen);
+	Attr.rawset("UpMsg", loadfiles[name].UpMsg);
+	Attr.rawset("ParseMode", loadfiles[name].ParseMode);
+	return Attr;
+}
+
+function getHeadData(name):(loadfiles)
+{
+	return loadfiles[name].HeadData;
+}

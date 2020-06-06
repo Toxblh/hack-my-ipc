@@ -1,0 +1,24 @@
+#!/bin/sh
+
+#export PATH=/gm/tools:/bin:/sbin:/usr/bin:/usr/sbin:$PATH
+
+# mount root filesystem in read-write mode
+/bin/echo "Mounting root fs rw ..."
+/bin/mount -n -o remount,rw /
+
+# mount all other filesystems
+/bin/echo "Mounting other filesystems ..."
+/bin/mount -a
+
+/bin/echo "Setting hostname ..."
+/bin/hostname GM
+
+/bin/echo "Bringing up interfaces ..."
+ifup -a
+
+# mount /mnt/mtd
+/bin/echo "Mounting user's MTD partion"
+chipver=`head -1 /proc/pmu/chipver`
+chipid=`echo $chipver | cut -c 1-4`
+
+sh boot.sh

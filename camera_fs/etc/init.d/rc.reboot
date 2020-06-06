@@ -1,0 +1,12 @@
+#! /bin/sh
+
+#export PATH=/gm/tools:/bin:/sbin:/usr/bin:/usr/sbin:$PATH
+
+# turn off swap
+/sbin/swapoff -a
+
+# unmount filesystems
+/bin/umount -a -r
+
+# reboot
+/sbin/reboot

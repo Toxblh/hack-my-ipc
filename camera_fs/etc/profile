@@ -1,0 +1,2 @@
+PATH=/usr/bin:/usr/sbin:/bin:/sbin:/gm/bin:/gm/tools
+PS1="[$USER@GM]# "

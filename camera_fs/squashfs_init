@@ -1,0 +1,29 @@
+#!/gm/bin/busybox ash
+/gm/bin/busybox mount -t tmpfs -o mode=0755 tmpfs /dev
+/gm/bin/busybox mount -t tmpfs -o mode=0777 tmpfs /tmp
+/gm/bin/busybox mount -t tmpfs -o mode=0755 tmpfs /var
+/gm/bin/busybox mount -t tmpfs -o mode=0755 tmpfs /bin
+/gm/bin/busybox mount -t tmpfs -o mode=0755 tmpfs /usr
+/gm/bin/busybox mount -t tmpfs -o mode=0755 tmpfs /sbin
+
+/gm/bin/busybox mkdir -p /var/run
+/gm/bin/busybox mkdir -p /var/locks
+
+/gm/bin/busybox mkdir -p /dev/sys
+/gm/bin/busybox mkdir -p /dev/pts
+/gm/bin/busybox mkdir -p /dev/shm
+/gm/bin/busybox mkdir -p /usr/bin
+/gm/bin/busybox mkdir -p /usr/sbin
+/gm/bin/busybox mount -t sysfs /dev/sys /sys
+/gm/bin/busybox mount -t proc  /proc
+/gm/bin/busybox mount -t devpts devpts /dev/pts
+
+# Populate /dev according to /sys
+
+/gm/bin/busybox --install -s
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+mdev -s
+ln -sf /gm/bin/busybox /bin/linuxrc
+/bin/linuxrc
+exec /sbin/init "$@" </dev/console >/dev/console 2>&1
+

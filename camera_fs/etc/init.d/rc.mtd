@@ -1,0 +1,11 @@
+# check MTD partition and mount it, add by Mars Cheng
+mount -t jffs2 /dev/mtdblock1 /mnt/mtd 2> mtd_check.tr
+result=$(grep "failed" mtd_check.tr)
+rm mtd_check.tr
+if (test -n "$result");then
+        echo "No JFFS2 fs info on mtdblock1, creating it..."
+        flash_eraseall /dev/mtd1
+        mount -t jffs2 /dev/mtdblock1 /mnt/mtd
+else
+        echo "Has JFFS2 on mtdblock1"
+fi

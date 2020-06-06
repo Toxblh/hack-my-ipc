@@ -1,0 +1,225 @@
+class PtzBase {
+	constructor()
+	{
+	}
+	
+	Name = "NONE"
+	
+	// 指明是云台协议还是矩阵协议，使用"PTZ", "MATRIX"表示
+	Type = "PTZ"
+	
+	// 以ms为单位
+	Internal = 200		
+	
+	// 云台地址范围
+	CamAddrRange 		= [0x00, 0xFF]
+	
+	// 监视地址范围
+	MonAddrRange		= [0x00, 0xFF]
+	
+	// 矩阵地址范围
+	MatrixAddrRange = [0x00, 0xFF]
+	
+	// 预置点范围
+	PresetRange 		= [0x00, 0xFF]
+	
+	// 自动巡航线路范围
+	TourRange			= [0x01, 0xFF]
+	
+	// 轨迹线路范围
+	PatternRange		= [0x01, 0xFF]
+	
+	// 垂直速度范围
+	TileSpeedRange 		= [0x01, 0xFF]
+	
+	// 水平速度范围
+	PanSpeedRange 		= [0x01, 0xFF]
+	
+	// 辅助范围
+	AuxRange 			= [0x01, 0xFF]
+	
+	AlarmLen = 0x00
+	
+	HighMask = 0x00
+	
+	LowMask = 0x00
+	
+	LowAuxMask = 0x00
+	
+	// 放大范围
+	ZoomRange = [0x01, 0xFF]
+	
+	cmd = []
+	StartOpr = {}
+	StopOpr = {}
+	
+	AddrPos = 0xffff
+	MonAddr = 0xffff
+	MatrixAddr = 0xffff
+	PresetPos = 0xffff
+	TileSpeedPos = 0xffff
+	PanSpeedPos = 0xffff
+	PatternPos 		= 0xffff
+	AuxPos = 0xffff
+	
+	// 在每次操作前一定要先调用此函数，进行初始化
+	function InitCmd(name, flag)
+	{
+		//cmd.clear();
+		if (flag == 0)
+		{
+			cmd = StartOpr.rawget(name);
+		}
+		else
+		{
+			cmd = StopOpr.rawget(name);
+		}
+	}
+	
+	function getCmd()
+	{
+		//::print("222\n");
+		return cmd;
+	}
+	
+	function CheckSum()
+	{
+		//::print("333\n");
+	}
+ 
+ 	function setCamAddr(addr)
+	{
+		if (AddrPos != 0xffff)
+		{
+			//::print("_444\n");
+			if (addr >= CamAddrRange[0] && addr <= CamAddrRange[1])
+			{
+				cmd[AddrPos] = addr;
+			}
+		}
+		//::print("444\n");
+	}
+	
+  function setMonAddr(addr)
+  {
+  	if (MonAddr != 0xffff)
+		{
+			//::print("_555\n");
+			if (addr >= MonAddrRange[0] && addr <= MonAddrRange[1])
+			{
+				cmd[MonAddr] = addr;
+			}
+		}
+		//::print("555\n");
+	}
+	
+	function setMatrixAddr(addr)
+	{
+		if (MatrixAddr != 0xffff)
+		{
+			//::print("_666\n");
+			if (addr >= MatrixAddrRange[0] && addr <= MatrixAddrRange[1])
+			{
+				cmd[MatrixAddr] = addr;
+			}
+		}
+		//::print("666\n");
+	}
+	
+	function setSpeed(ver, hor)
+  {
+  	if (TileSpeedPos != 0xffff)
+		{
+			if (ver >= TileSpeedRange[0] && ver <= TileSpeedRange[1])
+			{
+	  		cmd[TileSpeedPos] = ver;
+	  	}
+	  	//::print("_777\n");
+	  }
+	  
+	  if (PanSpeedPos != 0xffff)
+	  {
+	  	if (hor >= PanSpeedRange[0] && hor <= PanSpeedRange[1])
+			{
+	  		cmd[PanSpeedPos] = hor;
+	  	}
+	  	//::print("_777\n");
+	  }
+  	//::print("777\n");
+  }
+  
+  function setZoom(multiple)
+  {
+  	//::print("888");
+  }
+ 
+	function setPreset(preset)
+	{
+		if (PresetPos != 0xffff)
+		{
+			//::print("_999\n");
+			if (preset >= PresetRange[0] && preset <= PresetRange[1])
+			{
+				cmd[PresetPos] = preset;
+			}
+		}
+		//::print("999\n");
+	}
+	
+	function setTour(tour, preset)
+	{
+		if (tour >= TourRange[0] && tour <= TourRange[1])
+		{
+			if (preset >=PresetRange[0] && preset <= PresetRange[1])
+			{
+				cmd[PresetPos] = preset;
+			}
+		}
+		//::print("aaa");
+	}
+	
+	function oprTour(tour)
+	{
+		//::print("bbb\n");
+	}
+	
+	function setPattern(num)
+	{
+		if (PatternPos != 0xffff)
+		{
+			if (num >= PatternRange[0] && num <= PatternRange[1])
+			{
+				cmd[PatternPos] = num;
+			}
+		}
+		//::print("ccc\n");
+	}
+	
+	function setPosition(hor, ver, zoom)
+	{
+		//::print("ddd\n");
+	}
+	
+	function setAux(num)
+	{
+		if (AuxPos != 0xffff)
+		{
+			//::print("_eee\n");
+			if (num >= AuxRange[0] && num <= AuxRange[1])
+			{
+				cmd[AuxPos] = num;
+			}
+		}
+		//::print("eee\n");
+	}
+	
+	function OprSwitch(MonAddr, CamAddr)
+	{
+		//::print("fff\n");
+	}
+	
+	function OprSearch(arg1, arg2)
+	{
+		//::print("ggg\n");
+	}
+}

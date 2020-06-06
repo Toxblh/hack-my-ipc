@@ -1,0 +1,12 @@
+#!/gm/bin/busybox ash
+/gm/bin/busybox mount -t sysfs /dev/sys /sys
+/gm/bin/busybox mount -t proc  /proc
+/gm/bin/busybox mkdir -p /dev/shm
+/gm/bin/busybox mkdir -p /dev/pts
+/gm/bin/busybox mount -t devpts devpts /dev/pts
+# Populate /dev according to /sys
+/gm/bin/busybox mdev -s
+/gm/bin/busybox --install -s
+/linuxrc
+exec /sbin/init "$@" </dev/console >/dev/console 2>&1
+

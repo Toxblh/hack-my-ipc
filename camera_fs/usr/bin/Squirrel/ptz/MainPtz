@@ -1,0 +1,298 @@
+local loadfiles = {}
+local curName = {}
+
+enum PtzAbility {
+	//low mask
+	PTZ_DIRECTION = 0			// 方向
+	PTZ_ZOOM = 1					// 变倍
+	PTZ_FOCUS = 2					// 聚焦
+	PTZ_IRIS = 3					// 光圈
+	PTZ_ALARM = 4					// 报警功能
+	PTZ_LIGHT = 5					// 灯光
+	PTZ_SETPRESET = 6			// 设置预置点
+	PTZ_CLEARPRESET = 7		// 清除预置点
+	PTZ_GOTOPRESET = 8		// 转至预置点
+	PTZ_AUTOPANON = 9			// 水平开始
+	PTZ_AUTOPANOFF = 10		// 水平结束
+	PTZ_SETLIMIT = 11			// 设置边界
+	PTZ_AUTOSCANON = 12		// 自动扫描开始
+	PTZ_AUTOSCANOFF = 13	// 自动扫描开停止
+	PTZ_ADDTOUR = 14			// 增加巡航点
+	PTZ_DELETETOUR = 15		// 删除巡航点
+	PTZ_STARTTOUR = 16		// 开始巡航
+	PTZ_STOPTOUR = 17			// 结束巡航
+	PTZ_CLEARTOUR = 18		// 删除巡航
+	PTZ_SETPATTERN = 19		// 设置模式
+	PTZ_STARTPATTERN = 20	// 开始模式
+	PTZ_STOPPATTERN = 21	// 停止模式
+	PTZ_CLEARPATTERN = 22	// 清除模式
+	PTZ_POSITION = 23			// 快速定位
+	PTZ_AUX = 24					// 辅助开关
+	PTZ_MENU = 25					// 球机菜单
+	PTZ_EXIT = 26					// 退出球机菜单
+	PTZ_ENTER = 27				// 确认
+	PTZ_ESC = 28					// 取消
+	PTZ_MENUUPDOWN = 29		// 菜单上下操作
+	PTZ_MENULEFTRIGHT = 30 // 菜单左右操作
+	PTZ_MATRIXSWITCH = 31	 // 矩阵切换
+	// high mask
+	PTZ_FLIP = 32					// 镜头翻转
+	PTZ_RESET	= 33				// 云台复位
+	PTZ_LIGHTCONTROLLER	= 34	// 菜单左右操作 （主要用于网络对灯光控制器的控制）
+	PTZ_OPT_NUM	= 35					// 操作的个数
+}
+
+local TranAbilityTab = {
+	LeftUp = PtzAbility.PTZ_DIRECTION,
+	TileUp = PtzAbility.PTZ_DIRECTION,
+	RightUp = PtzAbility.PTZ_DIRECTION,
+	PanLeft = PtzAbility.PTZ_DIRECTION,
+	PanRight = PtzAbility.PTZ_DIRECTION,
+	LeftDown = PtzAbility.PTZ_DIRECTION,
+	TileDown = PtzAbility.PTZ_DIRECTION,
+	RightDown = PtzAbility.PTZ_DIRECTION,
+	ZoomWide = PtzAbility.PTZ_ZOOM,
+	ZoomTele = PtzAbility.PTZ_ZOOM,
+	FocusFar = PtzAbility.PTZ_FOCUS,
+	FocusNear = PtzAbility.PTZ_FOCUS,
+	IrisLarge = PtzAbility.PTZ_IRIS,
+	IrisSmall = PtzAbility.PTZ_IRIS,
+	AlarmSearch = PtzAbility.PTZ_ALARM,
+	LightOn = PtzAbility.PTZ_LIGHT,
+	LightOff = PtzAbility.PTZ_LIGHT,
+	SetPreset = PtzAbility.PTZ_SETPRESET,
+	ClearPreset = PtzAbility.PTZ_CLEARPRESET,
+	GoToPreset = PtzAbility.PTZ_GOTOPRESET,
+	AutoPanOn = PtzAbility.PTZ_AUTOPANON,
+	AutoPanOff = PtzAbility.PTZ_AUTOPANOFF,
+	SetLeftLimit = PtzAbility.PTZ_SETLIMIT,
+	SetRightLimit = PtzAbility.PTZ_SETLIMIT,
+	AutoScanOn = PtzAbility.PTZ_AUTOSCANON,
+	AutoScanOff = PtzAbility.PTZ_AUTOSCANOFF,
+	AddTour = PtzAbility.PTZ_ADDTOUR,
+	DeleteTour = PtzAbility.PTZ_DELETETOUR,
+	StartTour = PtzAbility.PTZ_STARTTOUR,
+	StopTour = PtzAbility.PTZ_STOPTOUR,
+	ClearTour = PtzAbility.PTZ_CLEARTOUR,
+	SetPatternStart = PtzAbility.PTZ_SETPATTERN,
+	SetPatternStop = PtzAbility.PTZ_SETPATTERN,
+	StartPattern = PtzAbility.PTZ_STARTPATTERN,
+	StopPattern = PtzAbility.PTZ_STOPPATTERN,
+	ClearPattern = PtzAbility.PTZ_CLEARPATTERN,
+	Position = PtzAbility.PTZ_POSITION,
+	AuxOn = PtzAbility.PTZ_AUX,
+	AuxOff = PtzAbility.PTZ_AUX,
+	Menu = PtzAbility.PTZ_MENU,
+	MenuExit = PtzAbility.PTZ_EXIT,
+	MenuEnter = PtzAbility.PTZ_ENTER,
+	MenuEsc = PtzAbility.PTZ_ESC,
+	MenuUp = PtzAbility.PTZ_MENUUPDOWN,
+	MenuDown = PtzAbility.PTZ_MENUUPDOWN,
+	MenuLeft = PtzAbility.PTZ_MENULEFTRIGHT,
+	MenuRight = PtzAbility.PTZ_MENULEFTRIGHT,
+	MatrixSwitch = PtzAbility.PTZ_MATRIXSWITCH,
+	Flip = PtzAbility.PTZ_FLIP,
+	Reset = PtzAbility.PTZ_RESET
+}
+
+local TranOperationArray = [
+	"OpNone",
+	"LeftUp", "TileUp", "RightUp", "PanLeft", "PanRight", "LeftDown", "TileDown", "RightDown",
+	"ZoomWide", "ZoomTele", "FocusFar", "FocusNear", "IrisLarge", "IrisSmall",
+	"AlarmSearch", 
+	"LightOn", "LightOff",
+	"SetPreset", "ClearPreset", "GoToPreset",
+	"AutoPanOn", "AutoPanOff",
+	"SetLeftLimit", "SetRightLimit",
+	"AutoScanOn", "AutoScanOff", 
+	"AddTour", "DeleteTour", "StartTour", "StopTour", "ClearTour",
+	"SetPatternStart", "SetPatternStop", "StartPattern", "StopPattern", "ClearPattern",
+	"Position",
+	"AuxOn", "AuxOff",
+	"Menu", "MenuExit", "MenuEnter", "MenuEsc", "MenuUp", "MenuDown", "MenuLeft", "MenuRight",
+	"MatrixSwitch",
+	"Flip", "Reset",
+	"MATRIX_SWITCH","LIGHT_CONTROLLER",
+	"SETPRESETNAME",
+	"ALARMPTZ", 
+	"STANDARD",
+]
+
+function init(path)
+{
+	::dofile(path + "/PtzBase", true);
+}
+
+function loadPtzFile(path, name):(loadfiles)
+{
+	loadfiles.rawset(name, ::dofile(path, true));
+	//print("path = "+path+", name = "+name+"\n"); 
+}
+
+function getProtocolNum():(loadfiles)
+{
+	//print("getProtocolNum: "+len+"\n");
+	return loadfiles.len();
+}
+
+function InitCmd(name, index, flag):(loadfiles, TranOperationArray, curName)
+{ 
+	if (index > TranOperationArray.len())
+	{
+		return false;
+	}
+	
+	if (loadfiles[name].StartOpr.rawin(TranOperationArray[index]))
+	{
+		curName.rawset("Select", name);
+		loadfiles[name].InitCmd(TranOperationArray[index], flag);
+		//print("index: "+index+" flag: "+flag+" name: "+TranOperationArray[index]+"\n");
+		return true;
+	}
+	return false;
+} 
+
+function getPtzCmd():(loadfiles, curName)
+{ 
+	return loadfiles[curName["Select"]].getCmd();
+} 
+
+function CheckSum():(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].CheckSum();
+}
+
+function setAddr(CamAddr, MonAddr, MatrixAddr):(loadfiles, curName)
+{
+	local name = curName["Select"];
+	//print("curName: "+name+"\n");
+	loadfiles[curName["Select"]].setCamAddr(CamAddr);
+	loadfiles[curName["Select"]].setMonAddr(MonAddr);
+	loadfiles[curName["Select"]].setMatrixAddr(MatrixAddr);
+}
+
+function setCamAddr(addr):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setCamAddr(addr);
+}
+
+function setMonAddr(addr):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setMonAddr(addr);
+}
+
+function setMatrixAddr(addr):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setMatrixAddr(addr);
+}
+
+function setSpeed(ver, hor):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setSpeed(ver, hor);
+}
+
+function setZoom(multiple):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setZoom(multiple);
+}
+
+function setPreset(preset):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setPreset(preset);
+}
+
+function setTour(preset):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setTour(preset);
+}
+
+function oprTour(tour):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].oprTour(tour);
+}
+
+function setPattern(num):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setPattern(num);
+}
+
+function setPosition(hor, ver, zoom):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setPosition(hor, ver, zoom);
+}
+
+function setAux(num):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].setAux(num);
+}
+
+function OprSwitch(MonAddr, CamAddr):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].OprSwitch(MonAddr, CamAddr);
+}
+
+function OprSearch(arg1, arg2):(loadfiles, curName)
+{
+	loadfiles[curName["Select"]].OprSearch(arg1, arg2);
+}
+
+function loadProtocolAttr(name):(loadfiles, TranAbilityTab)
+{
+	local Attr = {};
+	local Type = ["PTZ","MATRIX"];
+	local revtype ={};
+	local i = 0;
+	local lowMask = 0x00;
+	local highMask = 0x00;
+	
+	foreach(k,v in Type)
+	{
+		revtype.rawset(v, k);
+		//print("index= "+v+", value="+k+"");
+	}
+	
+	//Name2Index();
+	
+	Attr.rawset("Name", loadfiles[name].Name);
+	Attr.rawset("Type", revtype.rawget(loadfiles[name].Type));
+	Attr.rawset("Internal", loadfiles[name].Internal);
+	Attr.rawset("CamAddrMin", loadfiles[name].CamAddrRange[0]);
+	Attr.rawset("CamAddrMax", loadfiles[name].CamAddrRange[1]);
+	Attr.rawset("MonAddrMin", loadfiles[name].MonAddrRange[0]);
+	Attr.rawset("MonAddrMax", loadfiles[name].MonAddrRange[1]);
+	Attr.rawset("PresetMin", loadfiles[name].PresetRange[0]);
+	Attr.rawset("PresetMax", loadfiles[name].PresetRange[1]);	
+	Attr.rawset("TourMin", loadfiles[name].TourRange[0]);
+	Attr.rawset("TourMax", loadfiles[name].TourRange[1]);
+	Attr.rawset("PatternMin", loadfiles[name].PatternRange[0]);
+	Attr.rawset("PatternMax", loadfiles[name].PatternRange[1]);
+	Attr.rawset("TileSpeedMin", loadfiles[name].TileSpeedRange[0]);
+	Attr.rawset("TileSpeedMax", loadfiles[name].TileSpeedRange[1]);
+	
+	Attr.rawset("PanSpeedMin", loadfiles[name].PanSpeedRange[0]);
+	Attr.rawset("PanSpeedMax", loadfiles[name].PanSpeedRange[1]);
+	Attr.rawset("AuxMin", loadfiles[name].AuxRange[0]);
+	Attr.rawset("AuxMax", loadfiles[name].AuxRange[1]);
+	Attr.rawset("AlarmLen", loadfiles[name].AlarmLen);
+	
+	foreach(k,v in loadfiles[name].StartOpr)
+	{
+		local tmp = TranAbilityTab.rawget(k);
+		if (tmp > 31)
+		{
+			highMask = highMask | (1 << (tmp - 32));
+		}
+		else
+		{
+			lowMask = lowMask | (1 << tmp);
+		}	
+	}
+	loadfiles[name].HighMask = highMask;
+	loadfiles[name].LowMask = lowMask;
+	loadfiles[name].LowAuxMask = 0;
+	
+	Attr.rawset("HighMask", loadfiles[name].HighMask);
+	Attr.rawset("LowMask", loadfiles[name].LowMask);
+	Attr.rawset("LowAuxMask", loadfiles[name].LowAuxMask);
+	return Attr;
+}

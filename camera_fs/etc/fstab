@@ -1,0 +1,3 @@
+none		/proc		proc	defaults	0	0
+none		/dev/pts	devpts	gid=5,mode=620	0	0
+tmpfs		/dev/shm	tmpfs	size=20m	0	0

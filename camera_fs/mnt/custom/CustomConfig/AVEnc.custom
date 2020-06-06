@@ -1,0 +1,28 @@
+{
+   "Encode" : [
+      {
+         "MainFormat" : [
+            {
+			   "VideoEnable" : true,
+               "Video" : {
+                  "BitRateControl" : "VBR",
+                  "BitRate" : 1024,
+                  "Resolution" : "720P",
+                  "FPS" : 20
+               }
+            }
+         ],
+         "ExtraFormat" : [
+            {
+               "VideoEnable" : true,
+               "Video" : {
+               	  "BitRateControl" : "VBR",
+               	  "BitRate" : 512,
+                  "Resolution" : "VGA",
+                  "FPS" : 12
+               }
+            }
+         ]
+      }
+   ]
+}

@@ -1,0 +1,165 @@
+enum KEYVALUE {
+	KEY_0 = '0'
+    KEY_1 = '1'
+    KEY_2 = '2'
+    KEY_3 = '3'
+    KEY_4 = '4'
+    KEY_5 = '5'
+    KEY_6 = '6'
+    KEY_7 = '7'
+	KEY_8 = '8'
+    KEY_9 = '9'
+    KEY_10 = 'Q'
+    KEY_11 = 'W'
+    KEY_12 = 'E'
+    KEY_13 = 'R'
+    KEY_14 = 'T'
+    KEY_15 = 'Y'
+    KEY_16 = 'U'
+    KEY_10PLUS = 0xC0 // '~`
+
+// 控制键映射
+    KEY_UP = 0x26
+    KEY_DOWN = 0x28
+	KEY_LEFT = 0x25
+	KEY_RIGHT = 0x27
+	KEY_SHIFT = 0xFF
+	KEY_PGUP = 0x21
+	KEY_PGDN = 0x22
+	KEY_RET = 0x0D
+	KEY_ESC = 0x1B
+	KEY_FUNC = 0x11
+
+// 快捷键映射
+	KEY_REC = 0x70
+	KEY_SEARCH = 0x71
+	KEY_INFO = 0x72
+	KEY_ALARM = 0x73
+	KEY_ADDR = 0x74
+	KEY_BACKUP = 0x75
+	KEY_SPLIT = 0x76
+	KEY_SPLIT1 = 0x77
+	KEY_SPLIT4 = 0x78
+	KEY_SPLIT8 = 0x79
+	KEY_SPLIT9 = 0x7A
+	KEY_SPLIT16 = 0x7B
+	KEY_SPLIT5_8 = 0x7E
+	KEY_SPLIT9_12 = 0x7F
+	KEY_SPLIT13_16 = 0x80
+	KEY_SPLIT17_20 = 0x81
+	KEY_SPLIT21_24 = 0x82
+	KEY_SPLIT25_28 = 0x83
+	KEY_SPLIT29_32 = 0x84
+	KEY_SHUT = 0x5F
+	KEY_MENU = 'A'
+	KEY_HDD = 'S'
+	KEY_SPEAK = 'D'
+	KEY_SNAP = 'F'
+	KEY_REBOOT = 'Z'
+	KEY_ALARMRESET = 'X'	//报警复位，报警信息清除按键
+	KEY_OPEN_ALL_REC = 'C'
+	KEY_CLOSE_ALL_REC = 'V'
+	KEY_TOUR = 0xBA  //轮巡设置
+	KEY_LOGOUT = 0x5E //登录/注销
+
+// 回放键映射
+	KEY_PLAY = 0xB3
+	KEY_BACK = 0x08
+	KEY_STOP = 0xB2     // ''"' for US
+	KEY_FAST = 0xBB  // '+' any country
+	KEY_SLOW = 0xBD // '-' any country
+	KEY_NEXT = 0xB0
+	KEY_PREV = 0xB1
+	KEY_NEXTFRAME = 0xDD    //  ']}' for US
+	KEY_PREVFRAME = 0xDB    //  '[{' for US
+	KEY_STEPX = 0xDC    //  '\|' for US
+	KEY_FASTBACK = 0x07 //快退
+
+// 云台控制键映射
+	KEY_PTZ = 0x68   // '8' 云台控制菜单
+	KEY_TELE = 0x67   // '7' 望远
+	KEY_WIDE = 0x69   // '9' 广角
+	KEY_IRIS_CLOSE = 0x61   // '1' 光圈小
+	KEY_IRIS_OPEN = 0x63   // '3' 光圈大
+	KEY_FOCUS_NEAR = 0x64   // '4' 焦距拉近
+	KEY_FOCUS_FAR = 0x66   // '6' 焦距拉远
+	KEY_BRUSH = 0x65   // '5' 雨刷
+	KEY_LIGHT = 0x62   // '2' 灯光
+	KEY_SPRESET = 0x6B       // '+' 设置预置点
+	KEY_GPRESET = 0x6A  // '*' 转到预置点
+	KEY_DPRESET = 0x6D  // '-' 删除预置点
+	KEY_PATTERN = 0x60   // 云台模式
+	KEY_SCANON = 0x6E   // '.' 点间巡航
+	KEY_SCANOFF = 0xBF
+	KEY_AUTOPANON = 0x6F    // '/' 线扫
+	KEY_AUTOPANOFF = 0xC0
+	KEY_AUTOTOUR = 0x91     // scroll lock
+	KEY_PAUSE = 0x13
+
+// 读取默认键映射
+	KEY_RESET = 0xE9 // 恢复出厂设置
+	KEY_ZOOM = 0xFB		// 缩放，位移量
+	KEY_MUTE = 0xAD
+	KEY_UNKNOWN = 0 // 未定义键
+}
+
+class RS485Base {
+	constructor()
+	{
+	}
+	
+	Name = "NONE"
+	
+	// 指明是串口协议
+	Type = "RS485"
+	
+	// 单个命令的长度
+	CommandLen = 0
+	
+	// 命令头长度
+	HeadLen = 0
+	
+	// 命令头数据
+	HeadData = [0]
+		
+	// 地址码
+	RS485Addr = 0xFF
+	
+	// 是否有弹起消息
+	UpMsg = 0
+	
+	// 是否通过脚本解析
+	ParseMode = 1
+	
+	function getCmdLen()
+	{
+		//::print("getCmdLen\n");
+		return CommandLen;
+	}
+	
+	function getHeadLen()
+	{
+		//::print("getHeadLen\n");
+		return HeadLen;
+	}
+	
+	function getHead()
+	{
+		//::print("getHead\n");
+		return HeadData;
+	}
+	
+	function setAddr(addr)
+	{
+	}
+	
+	function CheckData()
+	{
+		//::print("CheckSum\n");
+	}
+	
+	function ParseData(cmdBuf)
+	{
+		return KEYVALUE.KEY_UNKNOWN;
+	}
+}

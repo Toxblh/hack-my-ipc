@@ -1,0 +1,62 @@
+class CommBase {
+	constructor()
+	{
+	}
+	
+	Name = "NONE"
+	
+	// 指明是串口协议
+	Type = "COMM"
+	
+	// 单个命令的长度
+	CommandLen = 0
+	
+	// 命令头长度
+	HeadLen = 0
+	
+	// 命令头数据
+	HeadData = [0]
+	
+	// 地址码
+	RS232Addr = 0xFF
+	
+	// 是否有弹起消息
+	UpMsg = 0
+	
+	// 是否通过脚本解析：0：通明串口 1：脚本解析 2：外部解析
+	ParseMode = 1
+	
+	function getCmdLen()
+	{
+		//::print("getCmdLen\n");
+		return CommandLen;
+	}
+	
+	function getHeadLen()
+	{
+		//::print("getHeadLen\n");
+		return HeadLen;
+	}
+	
+	function getHead()
+	{
+		//::print("getHead\n");
+		return HeadData;
+	}
+	
+	function setAddr(addr)
+	{
+		RS232Addr = addr;
+	}
+	
+	function CheckData()
+	{
+		//::print("CheckSum\n");
+	}
+	
+	function ParseData(cmdBuf)
+	{
+		return "";
+	}
+	
+}

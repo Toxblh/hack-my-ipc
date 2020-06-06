@@ -1,0 +1,91 @@
+{
+   "Groups" : [
+      {
+         "AuthorityList" : [
+            "ShutDown",
+            "ChannelTitle",
+            "RecordConfig",
+            "Backup",
+            "StorageManager",
+            "Account",
+            "SysInfo",
+            "QueryLog",
+            "DelLog",
+            "SysUpgrade",
+            "AutoMaintain",
+            "GeneralConfig",
+            "EncodeConfig",
+            "CommConfig",
+            "NetConfig",
+            "AlarmConfig",
+            "VideoConfig",
+            "PtzConfig",
+            "PTZControl",
+            "DefaultConfig",
+            "Talk_01",
+            "Monitor_01",
+            "Replay_01"
+         ],
+         "Memo" : "administrator group",
+         "Name" : "admin"
+      },
+      {
+         "AuthorityList" : [ "Monitor_01", "Replay_01" ],
+         "Memo" : "user group",
+         "Name" : "user"
+      }
+   ],
+   "Users" : [
+      {
+         "AuthorityList" : [
+            "ShutDown",
+            "ChannelTitle",
+            "RecordConfig",
+            "Backup",
+            "StorageManager",
+            "Account",
+            "SysInfo",
+            "QueryLog",
+            "DelLog",
+            "SysUpgrade",
+            "AutoMaintain",
+            "GeneralConfig",
+            "EncodeConfig",
+            "CommConfig",
+            "NetConfig",
+            "AlarmConfig",
+            "VideoConfig",
+            "PtzConfig",
+            "PTZControl",
+            "DefaultConfig",
+            "Talk_01",
+            "Monitor_01",
+            "Replay_01"
+         ],
+         "Group" : "admin",
+         "Memo" : "admin 's account",
+         "Name" : "admin",
+         "Password" : "Keirzm6t",
+         "Reserved" : true,
+         "Sharable" : true
+      },
+      {
+         "AuthorityList" : [ "Monitor_01", "Replay_01" ],
+         "Group" : "user",
+         "Memo" : "guest 's account",
+         "Name" : "guest",
+         "Password" : "nTBCS19C",
+         "Reserved" : true,
+         "Sharable" : true
+      },
+      {
+         "AuthorityList" : [ "Monitor_01" ],
+         "Group" : "user",
+         "Memo" : "default account",
+         "Name" : "default",
+         "Password" : "OxhlwSG8",
+         "Reserved" : false,
+         "Sharable" : false
+      }
+   ]
+}
